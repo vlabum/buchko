@@ -21,3 +21,7 @@ data class DevelopersLife (
     val fileSize: Int,
     val canVote: Boolean
 )
+
+data class DevelopersLifeList (
+    val result: List<DevelopersLife>
+)

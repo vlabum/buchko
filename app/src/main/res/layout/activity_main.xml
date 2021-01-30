@@ -6,15 +6,50 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <RadioGroup
+        android:id="@+id/rg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/rbRandom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onRadioButtonClicked"
+            android:checked="true"
+            android:text="@string/random"/>
+        <RadioButton
+            android:id="@+id/rbHot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onRadioButtonClicked"
+            android:text="@string/hot"/>
+        <RadioButton
+            android:id="@+id/rbLatest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onRadioButtonClicked"
+            android:text="@string/latest"/>
+        <RadioButton
+            android:id="@+id/rbTop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onRadioButtonClicked"
+            android:text="@string/top"/>
+
+    </RadioGroup>
 
     <ImageView
         android:id="@+id/ivImg"
-        android:layout_width="413dp"
-        android:layout_height="516dp"
+        android:layout_width="match_parent"
+        android:layout_height="340dp"
         android:src="@mipmap/ic_launcher"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rg"
+        android:scaleType="fitCenter"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
@@ -23,8 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:textAlignment="center"
-        android:background="@android:color/darker_gray"
-        android:textSize="24sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/imageButtonBack"
         tools:text="text" />
 
@@ -63,5 +97,29 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:visibility="gone"
         tools:visibility="visible"/>
+
+    <ImageView
+        android:id="@+id/ivError"
+        android:src="@drawable/ic_baseline_error_outline_24"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/tvError"
+        android:src="@drawable/ic_baseline_error_outline_24"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ErrorMess"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivError"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

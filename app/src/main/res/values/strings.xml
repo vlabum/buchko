@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">TinkoffTest</string>
+    <string name="ErrorMess">Произошла ошибка при загрузке данных. Проверьте подключение к сети.</string>
+    <string name="random">RANDOM</string>
+    <string name="hot">HOT</string>
+    <string name="latest">LATEST</string>
+    <string name="top">TOP</string>
 </resources>
