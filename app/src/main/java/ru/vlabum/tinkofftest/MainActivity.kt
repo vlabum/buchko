@@ -1,23 +1,37 @@
 package ru.vlabum.tinkofftest
 
+import android.Manifest
+import android.app.Activity
+import android.content.pm.PackageManager
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.RadioButton
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.load.resource.gif.GifDrawable
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.vlabum.tinkofftest.viewmodels.Category
 import ru.vlabum.tinkofftest.viewmodels.Loading
 import ru.vlabum.tinkofftest.viewmodels.MainState
 import ru.vlabum.tinkofftest.viewmodels.MainViewModel
+import java.io.File
+
 
 class MainActivity : AppCompatActivity() {
-
     private val colorOn = Color.argb(255, 50, 200, 50)
-    private val colorOff = Color.argb(255, 100, 100, 100)
+    private val colorOff = Color.argb(255, 180, 180, 180)
+
+    val col = Color.argb(255, 50, 200, 50)
 
     private val viewModel: MainViewModel by viewModels()
 
@@ -65,6 +79,7 @@ class MainActivity : AppCompatActivity() {
             .placeholder(R.drawable.ic_baseline_refresh_24)
             .error(R.drawable.ic_baseline_error_outline_24)
             .fitCenter()
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
             .into(ivImg)
 
         tvText.text = state.currentDescription
@@ -95,6 +110,5 @@ class MainActivity : AppCompatActivity() {
             Loading.HIDE_LOADING -> progress.isVisible = false
         }
     }
-
 
 }
