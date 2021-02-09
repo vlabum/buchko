@@ -1,30 +1,20 @@
 package ru.vlabum.tinkofftest
 
-import android.Manifest
-import android.app.Activity
-import android.content.pm.PackageManager
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.RadioButton
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.load.resource.gif.GifDrawable
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
-import kotlinx.android.synthetic.main.activity_main.*
+import ru.vlabum.tinkofftest.databinding.ActivityMainBinding
 import ru.vlabum.tinkofftest.viewmodels.Category
 import ru.vlabum.tinkofftest.viewmodels.Loading
 import ru.vlabum.tinkofftest.viewmodels.MainState
 import ru.vlabum.tinkofftest.viewmodels.MainViewModel
-import java.io.File
 
 
 class MainActivity : AppCompatActivity() {
@@ -35,20 +25,24 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels()
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        imageButtonNext.setOnClickListener {
+        binding.imageButtonNext.setOnClickListener {
             viewModel.getNext()
         }
 
-        imageButtonBack.setOnClickListener {
+        binding.imageButtonBack.setOnClickListener {
             viewModel.getPrev()
         }
 
-        imageButtonNext.setColorFilter(colorOn)
-        imageButtonBack.setColorFilter(colorOff)
+        binding.imageButtonNext.setColorFilter(colorOn)
+        binding.imageButtonBack.setColorFilter(colorOff)
 
         viewModel.observeState(this) { subscribeOnState(it) }
         viewModel.observeLoading(this) { renderLoading(it) }
@@ -73,6 +67,9 @@ class MainActivity : AppCompatActivity() {
 
     fun subscribeOnState(state: MainState) {
 
+        Log.d("sonstate", state.currentGifUrl)
+        Log.d("sonstate", state.showError.toString())
+
         Glide.with(this)
             .asGif()
             .load(state.currentGifUrl)
@@ -80,34 +77,34 @@ class MainActivity : AppCompatActivity() {
             .error(R.drawable.ic_baseline_error_outline_24)
             .fitCenter()
             .diskCacheStrategy(DiskCacheStrategy.NONE)
-            .into(ivImg)
+            .into(binding.ivImg)
 
-        tvText.text = state.currentDescription
+        binding.tvText.text = state.currentDescription
 
-        imageButtonBack.isEnabled = !state.isDisableBack
-       if (state.isDisableBack)
-            imageButtonBack.setColorFilter(colorOff)
+        binding.imageButtonBack.isEnabled = !state.isDisableBack
+        if (state.isDisableBack)
+            binding.imageButtonBack.setColorFilter(colorOff)
         else
-            imageButtonBack.setColorFilter(colorOn)
+            binding.imageButtonBack.setColorFilter(colorOn)
 
         if (state.showError) {
-            ivError.visibility = View.VISIBLE
-            tvError.visibility = View.VISIBLE
-            ivImg.visibility = View.GONE
-            tvText.visibility = View.GONE
+            binding.ivError.visibility = View.VISIBLE
+            binding.tvError.visibility = View.VISIBLE
+            binding.ivImg.visibility = View.GONE
+            binding.tvText.visibility = View.GONE
         } else {
-            ivError.visibility = View.GONE
-            tvError.visibility = View.GONE
-            ivImg.visibility = View.VISIBLE
-            tvText.visibility = View.VISIBLE
+            binding.ivError.visibility = View.GONE
+            binding.tvError.visibility = View.GONE
+            binding.ivImg.visibility = View.VISIBLE
+            binding.tvText.visibility = View.VISIBLE
         }
 
     }
 
     fun renderLoading(loadingState: Loading) {
         when (loadingState) {
-            Loading.SHOW_LOADING -> progress.isVisible = true
-            Loading.HIDE_LOADING -> progress.isVisible = false
+            Loading.SHOW_LOADING -> binding.progress.isVisible = true
+            Loading.HIDE_LOADING -> binding.progress.isVisible = false
         }
     }
 

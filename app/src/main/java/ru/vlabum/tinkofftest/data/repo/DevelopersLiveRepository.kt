@@ -14,8 +14,6 @@ sealed class ResultDevLife<out R> {
 object DevelopersLiveRepository {
     private val network = NetworkManager.api
     val devLifeList = ArrayList<DevelopersLife>()
-        get() = field
-
 
     suspend fun getNext(): ResultDevLife<DevelopersLife> {
         return withContext(Dispatchers.IO) {
